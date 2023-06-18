@@ -3,11 +3,11 @@
 
 <script lang="ts">
 import Vue from "vue";
-import StockPageFood from "@/components/StockPageFood.vue";
+import FoodPageItem from "@/components/FoodPageItem.vue";
 
 export default Vue.extend({
-    name: "StockPage",
-    components: { StockPageFood },
+    name: "FoodPage",
+    components: { FoodPageItem },
 
     data() {
         return {};

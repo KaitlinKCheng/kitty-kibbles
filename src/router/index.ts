@@ -1,15 +1,15 @@
 import Vue from "vue";
 import VueRouter, { RouteConfig } from "vue-router";
 
-import StockView from "@/views/StockView.vue";
+import FoodView from "@/views/FoodView.vue";
 
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
     {
         path: "/",
-        name: "stock",
-        component: StockView
+        name: "food",
+        component: FoodView
     },
 ];
 

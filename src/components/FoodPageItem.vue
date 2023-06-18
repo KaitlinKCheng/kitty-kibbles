@@ -5,7 +5,7 @@
 import Vue from "vue";
 
 export default Vue.extend({
-    name: "StockPageFood",
+    name: "FoodPageItem",
 
     props: {
 
