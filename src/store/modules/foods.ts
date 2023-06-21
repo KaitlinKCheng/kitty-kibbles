@@ -87,7 +87,7 @@ export default {
                 payload: { id: string, add: number }): void {
             const food = context.state.foodStock.get(payload.id);
             if (food !== undefined) {
-                food.count += payload.add;
+                food.count = Number(food.count) + Number(payload.add);
             }
 
             context.dispatch("updateLocalStorageFoodStock",
@@ -102,7 +102,7 @@ export default {
                 payload: { id: string, sub: number }): void {
             const food = context.state.foodStock.get(payload.id);
             if (food !== undefined) {
-                food.count -= payload.sub;
+                food.count = Number(food.count) - Number(payload.sub);
             }
 
             context.dispatch("updateLocalStorageFoodStock",
