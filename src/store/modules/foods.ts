@@ -62,6 +62,16 @@ export default {
             }
 
             return success;
-        }
+        },
+        incrementStock(context: ActionContext<FoodsState, State>,
+                payload: { id: string, add: number }): void {
+            const food = context.state.foodStock.get(payload.id);
+            food?.addCount(payload.add);
+        },
+        decrementStock(context: ActionContext<FoodsState, State>,
+                payload: { id: string, sub: number }): void {
+            const food = context.state.foodStock.get(payload.id);
+            food?.subCount(payload.sub);
+        },
     }
 }
