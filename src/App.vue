@@ -5,7 +5,7 @@
     >
         <b-navbar
             type="dark"
-            variant="dark"
+            variant="primary"
         >
             <b-navbar-nav>
                 <b-navbar-brand to="/">

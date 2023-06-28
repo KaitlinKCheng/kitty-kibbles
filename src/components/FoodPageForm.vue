@@ -36,7 +36,7 @@
         <template #modal-footer="{ ok }">
             <b-button
                 @click="[submitForm(), ok()]"
-                variant="success"
+                variant="secondary"
                 :disabled="!state"
             >Submit</b-button>
         </template>

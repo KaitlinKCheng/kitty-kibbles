@@ -6,7 +6,7 @@
         >
             <b-button
                 @click="showFoodForm()"
-                variant="success"
+                variant="secondary"
                 size="lg"
             >
                 <span>Add New Food</span>&nbsp;

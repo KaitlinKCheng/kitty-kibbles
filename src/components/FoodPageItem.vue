@@ -3,9 +3,10 @@
         <b-card
             class="card"
             :header="food.brand + ' – ' + food.name"
-            header-bg-variant="light"
-            header-border-variant="dark"
-            border-variant="dark"
+            header-text-variant="light"
+            header-bg-variant="primary"
+            header-border-variant="primary"
+            border-variant="primary"
         >
             <b-row
                 class="text-center"
