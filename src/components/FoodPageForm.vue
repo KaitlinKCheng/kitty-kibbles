@@ -47,6 +47,7 @@
 import Vue from "vue";
 import store from "@/store";
 import Food from "@/ts/classes/Food";
+import { FOOD_INVALID_ID } from "@/ts/constants";
 
 export default Vue.extend({
     name: "FoodPageForm",
@@ -81,6 +82,7 @@ export default Vue.extend({
         },
         submitForm(): void {
             store.dispatch("foods/addFood", new Food(
+                FOOD_INVALID_ID,
                 this.formBrand,
                 this.formName,
                 this.formSize,
