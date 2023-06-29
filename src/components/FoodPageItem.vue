@@ -8,32 +8,48 @@
             header-border-variant="primary"
             border-variant="primary"
         >
-            <b-row
-                class="text-center"
-                align-h="between"
-            >
-                <b-button
-                    @click="decrementStock()"
-                    variant="danger"
-                    :disabled="food.count <= 0"
+            <b-card-body>
+                <b-row
+                    class="text-center"
+                    align-h="between"
                 >
-                    <fa-icon icon="fa-solid fa-minus" />
-                </b-button>
-                <b-row class="flex-column">
-                    <b-col align-self="center">
-                        <span>{{ food.size }}</span>
-                    </b-col>
-                    <b-col align-self="center">
-                        <span>{{ food.count + " remaining" }}</span>
-                    </b-col>
+                    <b-button
+                        @click="decrementStock()"
+                        variant="danger"
+                        :disabled="food.count <= 0"
+                    >
+                        <fa-icon icon="fa-solid fa-minus" />
+                    </b-button>
+                    <b-row class="flex-column">
+                        <b-col align-self="center">
+                            <span>{{ food.size }}</span>
+                        </b-col>
+                        <b-col align-self="center">
+                            <span>{{ food.count + " remaining" }}</span>
+                        </b-col>
+                    </b-row>
+                    <b-button
+                        @click="incrementStock()"
+                        variant="success"
+                    >
+                        <fa-icon icon="fa-solid fa-plus" />
+                    </b-button>
                 </b-row>
-                <b-button
-                    @click="incrementStock()"
-                    variant="success"
-                >
-                    <fa-icon icon="fa-solid fa-plus" />
-                </b-button>
-            </b-row>
+            </b-card-body>
+            <b-card-footer
+                footer-bg-variant="white"
+                footer-border-variant="primary"
+            >
+                <b-row>
+                    <b-button
+                        @click="deleteFood()"
+                        variant="danger"
+                    >
+                        <span>Delete</span>&nbsp;
+                        <fa-icon icon="fa-solid fa-trash" />
+                    </b-button>
+                </b-row>
+            </b-card-footer>
         </b-card>
     </b-container>
 </template>
@@ -64,6 +80,9 @@ export default Vue.extend({
         decrementStock(): void {
             store.dispatch("foods/decrementStock", { id: this.food.id, sub: 1 });
             this.$forceUpdate();
+        },
+        deleteFood(): void {
+            this.$emit("delete-food", this.food.id);
         },
     }
 });

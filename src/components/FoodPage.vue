@@ -24,7 +24,10 @@
                 :key="food.id"
                 class="my-3"
             >
-                <FoodPageItem :display-food="food" />
+                <FoodPageItem
+                    :display-food="food"
+                    @delete-food="deleteFood(food)"
+                />
             </b-col>
         </b-row>
         <FoodPageForm @done-form="$forceUpdate()" />
@@ -58,6 +61,10 @@ export default Vue.extend({
     methods: {
         showFoodForm(): void {
             this.$bvModal.show("formModal");
+        },
+        deleteFood(foodItem: Food): void {
+            store.dispatch("foods/removeFood", foodItem.id);
+            this.$forceUpdate();
         }
     }
 });
