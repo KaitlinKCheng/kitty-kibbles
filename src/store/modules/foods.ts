@@ -4,13 +4,14 @@ import State from "@/store/states/State";
 import FoodsState from "@/store/states/FoodsState";
 
 import Food from "@/ts/classes/Food";
-import { FOOD_STOCK_KEY } from "@/ts/constants";
+import { FOOD_INVALID_ID, FOOD_STOCK_KEY, FOOD_ID_KEY } from "@/ts/constants";
 
 export default {
     namespaced: true,
 
     state: (): FoodsState => ({
-        foodStock: new Map<string, Food>() // All the types of food available
+        foodStock: new Map<string, Food>(), // All the types of food available
+        nextFoodId: 0 // Next ID to assign to a new Food object
     }),
 
     getters: {
@@ -22,6 +23,9 @@ export default {
     mutations: {
         setFoodStock(state: FoodsState, payload: Map<string, Food>): void {
             state.foodStock = payload;
+        },
+        setNextFoodId(state: FoodsState, payload: number): void {
+            state.nextFoodId = payload;
         },
         addFood(state: FoodsState, payload: { key: string, value: Food }): void {
             state.foodStock.set(payload.key, payload.value);
@@ -41,6 +45,11 @@ export default {
             if (lsFoodStock !== null) {
                 context.commit("setFoodStock", new Map(JSON.parse(lsFoodStock)));
             }
+
+            const lsFoodId = localStorage.getItem(FOOD_ID_KEY);
+            if (lsFoodId !== null) {
+                context.commit("setNextFoodId", JSON.parse(lsFoodId));
+            }
         },
         /**
          * Adds a @see Food object to the foodStock.
@@ -51,7 +60,31 @@ export default {
         addFood(context: ActionContext<FoodsState, State>, payload: Food): boolean {
             let success = false;
 
+            // Assign an ID to newly created Food objects
+            if (payload.id === FOOD_INVALID_ID) {
+                payload.id = context.state.nextFoodId.toString();
+                context.state.nextFoodId++;
+                context.dispatch("updateLocalStorageFoodId");
+            }
+
             if (!context.state.foodStock.has(payload.id)) {
+                context.commit("addFood", { key: payload.id, value: payload });
+                context.dispatch("updateLocalStorageFoodStock");
+                success = true;
+            }
+
+            return success;
+        },
+        /**
+         * Updates a @see Food object in the foodStock.
+         * @param {ActionContext<FoodsState, State>} context - properties of the module
+         * @param {Food} payload - the @see Food to update
+         * @return {boolean} - success result
+         */
+        updateFood(context: ActionContext<FoodsState, State>, payload: Food): boolean {
+            let success = false;
+
+            if (context.state.foodStock.has(payload.id)) {
                 context.commit("addFood", { key: payload.id, value: payload });
                 context.dispatch("updateLocalStorageFoodStock");
                 success = true;
@@ -110,6 +143,13 @@ export default {
          */
         updateLocalStorageFoodStock(context: ActionContext<FoodsState, State>): void {
             localStorage.setItem(FOOD_STOCK_KEY, JSON.stringify([...context.state.foodStock]));
+        },
+        /**
+         * Stores the current nextFoodId in localStorage.
+         * @param {ActionContext<FoodsState, State>} context - properties of the module
+         */
+        updateLocalStorageFoodId(context: ActionContext<FoodsState, State>): void {
+            localStorage.setItem(FOOD_ID_KEY, JSON.stringify(context.state.nextFoodId));
         }
     }
 }
