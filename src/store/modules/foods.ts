@@ -69,8 +69,7 @@ export default {
 
             if (!context.state.foodStock.has(payload.id)) {
                 context.commit("addFood", { key: payload.id, value: payload });
-                context.dispatch("updateLocalStorageFoodStock",
-                        { key: FOOD_STOCK_KEY, value: context.state.foodStock });
+                context.dispatch("updateLocalStorageFoodStock");
                 success = true;
             }
 
@@ -87,8 +86,7 @@ export default {
 
             if (context.state.foodStock.has(payload)) {
                 context.commit("removeFood", payload);
-                context.dispatch("updateLocalStorageFoodStock",
-                        { key: FOOD_STOCK_KEY, value: context.state.foodStock });
+                context.dispatch("updateLocalStorageFoodStock");
                 success = true;
             }
 
@@ -106,8 +104,7 @@ export default {
                 food.count = Number(food.count) + Number(payload.add);
             }
 
-            context.dispatch("updateLocalStorageFoodStock",
-                    { key: FOOD_STOCK_KEY, value: context.state.foodStock });
+            context.dispatch("updateLocalStorageFoodStock");
         },
         /**
          * Decrements the count property of a @see Food.
@@ -121,8 +118,7 @@ export default {
                 food.count = Number(food.count) - Number(payload.sub);
             }
 
-            context.dispatch("updateLocalStorageFoodStock",
-                    { key: FOOD_STOCK_KEY, value: context.state.foodStock });
+            context.dispatch("updateLocalStorageFoodStock");
         },
         /**
          * Stores the current foodStock in localStorage.
