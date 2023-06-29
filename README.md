@@ -9,12 +9,12 @@ Kitty Kibbles is a logging app for tracking purchased cat food.
 Implemented:
 - Add new type of cat food.
 - Increase/decrease available cat food.
+- Edit/delete cat food.
 - localStorage persistence in the browser for saving cat food.
 
 Upcoming:
-- Edit/delete cat food.
-- Sort cat food display.
 - Add/subtract multiple counts of cat food at a time.
+- Sort cat food display.
 - UI updates.
 - Cat profile page.
 - . . . and more!
