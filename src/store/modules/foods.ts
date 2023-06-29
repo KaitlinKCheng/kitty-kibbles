@@ -76,6 +76,23 @@ export default {
             return success;
         },
         /**
+         * Updates a @see Food object in the foodStock.
+         * @param {ActionContext<FoodsState, State>} context - properties of the module
+         * @param {Food} payload - the @see Food to update
+         * @return {boolean} - success result
+         */
+        updateFood(context: ActionContext<FoodsState, State>, payload: Food): boolean {
+            let success = false;
+
+            if (context.state.foodStock.has(payload.id)) {
+                context.commit("addFood", { key: payload.id, value: payload });
+                context.dispatch("updateLocalStorageFoodStock");
+                success = true;
+            }
+
+            return success;
+        },
+        /**
          * Removes a @see Food object from the foodStock.
          * @param {ActionContext<FoodsState, State>} context - properties of the module
          * @param {string} payload - the id of the @see Food object to remove

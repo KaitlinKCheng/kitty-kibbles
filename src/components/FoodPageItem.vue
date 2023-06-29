@@ -42,6 +42,14 @@
             >
                 <b-row>
                     <b-button
+                        @click="editFood()"
+                        variant="secondary"
+                    >
+                        <span>Edit</span>&nbsp;
+                        <fa-icon icon="fa-solid fa-pen-to-square" />
+                    </b-button>
+                    <b-button
+                        class="ml-2"
                         @click="deleteFood()"
                         variant="danger"
                     >
@@ -80,6 +88,9 @@ export default Vue.extend({
         decrementStock(): void {
             store.dispatch("foods/decrementStock", { id: this.food.id, sub: 1 });
             this.$forceUpdate();
+        },
+        editFood(): void {
+            this.$emit("edit-food", this.food);
         },
         deleteFood(): void {
             this.$emit("delete-food", this.food.id);

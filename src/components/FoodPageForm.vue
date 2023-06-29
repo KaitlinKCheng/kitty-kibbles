@@ -1,28 +1,34 @@
 <template>
     <b-modal
         id="formModal"
-        title="Add New Food"
+        :title="editing ? 'Edit Food' : 'Add New Food'"
     >
         <b-form>
             <b-form-group label="Brand">
                 <b-form-input
                     v-model="formBrand"
                     type="text"
-                    placeholder="Purina"
+                    :placeholder="
+                        editing && originalFood?.brand ? originalFood.brand : 'Purina'
+                    "
                 ></b-form-input>
             </b-form-group>
             <b-form-group label="Name">
                 <b-form-input
                     v-model="formName"
                     type="text"
-                    placeholder="Chicken & Liver"
+                    :placeholder="
+                        editing && originalFood?.name ? originalFood.name : 'Chicken & Liver'
+                    "
                 ></b-form-input>
             </b-form-group>
             <b-form-group label="Size">
                 <b-form-input
                     v-model="formSize"
                     type="text"
-                    placeholder="Small Can"
+                    :placeholder="
+                        editing && originalFood?.size ? originalFood.size : 'Small Can'
+                    "
                 ></b-form-input>
             </b-form-group>
             <b-form-group label="Available">
@@ -52,6 +58,11 @@ import { FOOD_INVALID_ID } from "@/ts/constants";
 export default Vue.extend({
     name: "FoodPageForm",
 
+    props: {
+        editing: Boolean,
+        foodItem: Food
+    },
+
     data() {
         return {
             formBrand: "",
@@ -73,6 +84,20 @@ export default Vue.extend({
         },
         state(): boolean {
             return this.brandState && this.nameState && this.sizeState;
+        },
+        originalFood(): Food {
+            return this.foodItem;
+        }
+    },
+
+    watch: {
+        originalFood(newOriginalFood) {
+            if (this.editing) {
+                this.formBrand = newOriginalFood?.brand;
+                this.formName = newOriginalFood?.name;
+                this.formSize = newOriginalFood?.size;
+                this.formCount = newOriginalFood?.count;
+            }
         }
     },
 
@@ -81,13 +106,23 @@ export default Vue.extend({
             this.$bvModal.show("formModal");
         },
         submitForm(): void {
-            store.dispatch("foods/addFood", new Food(
-                FOOD_INVALID_ID,
-                this.formBrand,
-                this.formName,
-                this.formSize,
-                this.formCount
-            ));
+            if (this.editing) {
+                const updatedFood = this.originalFood;
+                updatedFood.brand = this.formBrand;
+                updatedFood.name = this.formName;
+                updatedFood.size = this.formSize;
+                updatedFood.count = this.formCount;
+
+                store.dispatch("foods/updateFood", updatedFood);
+            } else {
+                store.dispatch("foods/addFood", new Food(
+                    FOOD_INVALID_ID,
+                    this.formBrand,
+                    this.formName,
+                    this.formSize,
+                    this.formCount
+                ));
+            }
 
             this.clearForm();
             this.$emit("done-form");
