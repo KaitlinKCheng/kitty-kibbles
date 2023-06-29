@@ -21,13 +21,21 @@
         >
             <b-col
                 v-for="food in getFoodStock.values()"
-                :key="food.id"
+                :key="food.id + food.brand + food.name + food.size + food.count"
                 class="my-3"
             >
-                <FoodPageItem :display-food="food" />
+                <FoodPageItem
+                    :display-food="food"
+                    @edit-food="editFood(food)"
+                    @delete-food="deleteFood(food)"
+                />
             </b-col>
         </b-row>
-        <FoodPageForm @done-form="$forceUpdate()" />
+        <FoodPageForm
+            :food-item="currentFood"
+            :editing="editing"
+            @done-form="[$forceUpdate(), editing = false]"
+        />
     </b-container>
 </template>
 
@@ -49,6 +57,13 @@ export default Vue.extend({
         store.dispatch("foods/init");
     },
 
+    data() {
+        return {
+            currentFood: new Food(),
+            editing: false
+        };
+    },
+
     computed: {
         getFoodStock(): Map<string, Food> {
             return store.state.foods.foodStock;
@@ -58,6 +73,15 @@ export default Vue.extend({
     methods: {
         showFoodForm(): void {
             this.$bvModal.show("formModal");
+        },
+        editFood(newFood: Food): void {
+            this.currentFood = newFood;
+            this.editing = true;
+            this.showFoodForm();
+        },
+        deleteFood(foodItem: Food): void {
+            store.dispatch("foods/removeFood", foodItem.id);
+            this.$forceUpdate();
         }
     }
 });
