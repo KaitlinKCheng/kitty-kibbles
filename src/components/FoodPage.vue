@@ -5,7 +5,7 @@
             align="center"
         >
             <b-button
-                @click="showFoodForm()"
+                @click="[editing = false, showFoodForm()]"
                 variant="secondary"
                 size="lg"
             >
