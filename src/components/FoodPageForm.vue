@@ -3,7 +3,7 @@
         id="formModal"
         :title="editing ? 'Edit Food' : 'Add New Food'"
     >
-        <b-form>
+        <b-form @keydown.enter="handleEnter()">
             <b-form-group label="Brand">
                 <b-form-input
                     v-model="formBrand"
@@ -39,9 +39,9 @@
                 ></b-form-input>
             </b-form-group>
         </b-form>
-        <template #modal-footer="{ ok }">
+        <template #modal-footer>
             <b-button
-                @click="[submitForm(), ok()]"
+                @click="submitForm()"
                 variant="secondary"
                 :disabled="!state"
             >Submit</b-button>
@@ -109,6 +109,11 @@ export default Vue.extend({
         show(): void {
             this.$bvModal.show("formModal");
         },
+        handleEnter(): void {
+            if (this.state) {
+                this.submitForm();
+            }
+        },
         submitForm(): void {
             if (this.editing) {
                 const updatedFood = this.originalFood;
@@ -129,6 +134,7 @@ export default Vue.extend({
             }
 
             this.resetFields();
+            this.$bvModal.hide("formModal");
             this.$emit("done-form");
         },
         resetFields(): void {
