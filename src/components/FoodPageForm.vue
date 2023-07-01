@@ -82,8 +82,11 @@ export default Vue.extend({
         sizeState(): boolean {
             return this.formSize !== null && this.formSize !== "";
         },
+        countState(): boolean {
+            return this.formCount >= 0;
+        },
         state(): boolean {
-            return this.brandState && this.nameState && this.sizeState;
+            return this.brandState && this.nameState && this.sizeState && this.countState;
         },
         originalFood(): Food {
             return this.foodItem;
