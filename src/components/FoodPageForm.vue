@@ -94,8 +94,11 @@ export default Vue.extend({
         editing() {
             this.refreshFields();
         },
-        originalFood() {
-            this.refreshFields();
+        originalFood: {
+            deep: true,
+            handler(): void {
+                this.refreshFields();
+            }
         }
     },
 
