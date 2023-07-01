@@ -82,8 +82,11 @@ export default Vue.extend({
         sizeState(): boolean {
             return this.formSize !== null && this.formSize !== "";
         },
+        countState(): boolean {
+            return this.formCount >= 0;
+        },
         state(): boolean {
-            return this.brandState && this.nameState && this.sizeState;
+            return this.brandState && this.nameState && this.sizeState && this.countState;
         },
         originalFood(): Food {
             return this.foodItem;
@@ -91,12 +94,13 @@ export default Vue.extend({
     },
 
     watch: {
-        originalFood(newOriginalFood) {
-            if (this.editing) {
-                this.formBrand = newOriginalFood?.brand;
-                this.formName = newOriginalFood?.name;
-                this.formSize = newOriginalFood?.size;
-                this.formCount = newOriginalFood?.count;
+        editing() {
+            this.refreshFields();
+        },
+        originalFood: {
+            deep: true,
+            handler(): void {
+                this.refreshFields();
             }
         }
     },
@@ -124,14 +128,27 @@ export default Vue.extend({
                 ));
             }
 
-            this.clearForm();
+            this.resetFields();
             this.$emit("done-form");
         },
-        clearForm(): void {
+        resetFields(): void {
             this.formBrand = "";
             this.formName = "";
             this.formSize = "";
             this.formCount = 0;
+        },
+        matchFieldsToFood(): void {
+            this.formBrand = this.originalFood.brand;
+            this.formName = this.originalFood.name;
+            this.formSize = this.originalFood.size;
+            this.formCount = this.originalFood.count;
+        },
+        refreshFields(): void {
+            if (this.editing) {
+                this.matchFieldsToFood();
+            } else {
+                this.resetFields();
+            }
         }
     }
 });
