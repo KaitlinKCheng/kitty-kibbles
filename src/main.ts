@@ -14,13 +14,13 @@ import "@/assets/custom.scss";
 // Font Awesome
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faCat, faPlus, faMinus, faTrash, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faCat, faPlus, faMinus, faTimes, faTrash, faPenToSquare, faCubes } from "@fortawesome/free-solid-svg-icons";
 
 Vue.config.productionTip = false;
 
 Vue.use(BootstrapVue);
 Vue.component("fa-icon", FontAwesomeIcon);
-library.add(faCat, faPlus, faMinus, faTrash, faPenToSquare);
+library.add(faCat, faPlus, faMinus, faTimes, faTrash, faPenToSquare, faCubes);
 
 new Vue({
     router,

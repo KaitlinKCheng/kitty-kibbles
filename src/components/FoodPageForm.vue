@@ -3,7 +3,7 @@
         id="formModal"
         :title="editing ? 'Edit Food' : 'Add New Food'"
     >
-        <b-form>
+        <b-form @keydown.enter="submitForm()">
             <b-form-group label="Brand">
                 <b-form-input
                     v-model="formBrand"
@@ -11,7 +11,9 @@
                     :placeholder="
                         editing && originalFood?.brand ? originalFood.brand : 'Purina'
                     "
+                    :state="submitted ? brandState : null"
                 ></b-form-input>
+                <b-form-invalid-feedback>Please enter a brand.</b-form-invalid-feedback>
             </b-form-group>
             <b-form-group label="Name">
                 <b-form-input
@@ -20,7 +22,9 @@
                     :placeholder="
                         editing && originalFood?.name ? originalFood.name : 'Chicken & Liver'
                     "
+                    :state="submitted ? nameState : null"
                 ></b-form-input>
+                <b-form-invalid-feedback>Please enter a name.</b-form-invalid-feedback>
             </b-form-group>
             <b-form-group label="Size">
                 <b-form-input
@@ -29,21 +33,24 @@
                     :placeholder="
                         editing && originalFood?.size ? originalFood.size : 'Small Can'
                     "
+                    :state="submitted ? sizeState : null"
                 ></b-form-input>
+                <b-form-invalid-feedback>Please enter a size.</b-form-invalid-feedback>
             </b-form-group>
             <b-form-group label="Available">
                 <b-form-input
                     v-model="formCount"
                     type="number"
                     min="0"
+                    :state="submitted ? countState : null"
                 ></b-form-input>
+                <b-form-invalid-feedback>Please enter a positive number.</b-form-invalid-feedback>
             </b-form-group>
         </b-form>
-        <template #modal-footer="{ ok }">
+        <template #modal-footer>
             <b-button
-                @click="[submitForm(), ok()]"
+                @click="submitForm()"
                 variant="secondary"
-                :disabled="!state"
             >Submit</b-button>
         </template>
     </b-modal>
@@ -69,6 +76,7 @@ export default Vue.extend({
             formName: "",
             formSize: "",
             formCount: 0,
+            submitted: false
         };
     },
 
@@ -110,6 +118,12 @@ export default Vue.extend({
             this.$bvModal.show("formModal");
         },
         submitForm(): void {
+            this.submitted = true;
+
+            if (!this.state) {
+                return;
+            }
+
             if (this.editing) {
                 const updatedFood = this.originalFood;
                 updatedFood.brand = this.formBrand;
@@ -129,6 +143,8 @@ export default Vue.extend({
             }
 
             this.resetFields();
+            this.submitted = false;
+            this.$bvModal.hide("formModal");
             this.$emit("done-form");
         },
         resetFields(): void {
@@ -149,6 +165,8 @@ export default Vue.extend({
             } else {
                 this.resetFields();
             }
+
+            this.submitted = false;
         }
     }
 });
