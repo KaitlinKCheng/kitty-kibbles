@@ -11,10 +11,10 @@ Implemented:
 - Increase/decrease available cat food.
 - Edit/delete cat food.
 - localStorage persistence in the browser for saving cat food.
+- Add/subtract multiple counts of cat food at a time.
 
 Upcoming:
-- Add/subtract multiple counts of cat food at a time.
-- Sort cat food display.
+- Search/sort cat food items.
 - UI updates.
 - Cat profile page.
 - . . . and more!
