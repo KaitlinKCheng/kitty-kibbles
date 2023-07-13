@@ -2,7 +2,7 @@
     <b-container>
         <b-card
             class="card"
-            :header="food.brand + ' – ' + food.name"
+            :header="food.brand + ' – ' + food.name + ' (' + food.size + ')'"
             header-text-variant="light"
             header-bg-variant="primary"
             header-border-variant="primary"
@@ -20,14 +20,7 @@
                     >
                         <fa-icon icon="fa-solid fa-minus" />
                     </b-button>
-                    <b-row class="flex-column">
-                        <b-col align-self="center">
-                            <span>{{ food.size }}</span>
-                        </b-col>
-                        <b-col align-self="center">
-                            <span>{{ food.count + " remaining" }}</span>
-                        </b-col>
-                    </b-row>
+                    <span>{{ food.count + " remaining" }}</span>
                     <b-button
                         @click="incrementStock()"
                         variant="success"
