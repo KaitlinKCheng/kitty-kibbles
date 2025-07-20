@@ -65,7 +65,7 @@ export default Vue.extend({
     },
 
     computed: {
-        getFoodStock(): Map<string, Food> {
+        getFoodStock(): Map<number, Food> {
             return store.state.foods.foodStock;
         },
     },
