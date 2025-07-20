@@ -12,6 +12,7 @@
                         editing && originalFood?.brand ? originalFood.brand : 'Purina'
                     "
                     :state="submitted ? brandState : null"
+                    autofocus
                 ></b-form-input>
                 <b-form-invalid-feedback>Please enter a brand.</b-form-invalid-feedback>
             </b-form-group>

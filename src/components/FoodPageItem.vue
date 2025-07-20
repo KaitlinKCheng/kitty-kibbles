@@ -68,6 +68,7 @@
                                     type="number"
                                     min="0"
                                     :state="addStockState"
+                                    autofocus
                                 ></b-form-input>
                             </b-form-group>
                             <b-form-group
