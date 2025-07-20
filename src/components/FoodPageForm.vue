@@ -51,6 +51,7 @@
             <b-button
                 @click="submitForm()"
                 variant="secondary"
+                :disabled="submitted && !state"
             >Submit</b-button>
         </template>
     </b-modal>
