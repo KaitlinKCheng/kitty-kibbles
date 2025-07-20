@@ -10,27 +10,27 @@ export default {
     namespaced: true,
 
     state: (): FoodsState => ({
-        foodStock: new Map<string, Food>(), // All the types of food available
+        foodStock: new Map<number, Food>(), // All the types of food available
         nextFoodId: 0 // Next ID to assign to a new Food object
     }),
 
     getters: {
-        foodStock: (state: FoodsState) => (): Map<string, Food> => {
+        foodStock: (state: FoodsState) => (): Map<number, Food> => {
             return state.foodStock;
         }
     },
 
     mutations: {
-        setFoodStock(state: FoodsState, payload: Map<string, Food>): void {
+        setFoodStock(state: FoodsState, payload: Map<number, Food>): void {
             state.foodStock = payload;
         },
         setNextFoodId(state: FoodsState, payload: number): void {
             state.nextFoodId = payload;
         },
-        addFood(state: FoodsState, payload: { key: string, value: Food }): void {
+        addFood(state: FoodsState, payload: { key: number, value: Food }): void {
             state.foodStock.set(payload.key, payload.value);
         },
-        removeFood(state: FoodsState, payload: string): void {
+        removeFood(state: FoodsState, payload: number): void {
             state.foodStock.delete(payload);
         },
     },
@@ -62,7 +62,7 @@ export default {
 
             // Assign an ID to newly created Food objects
             if (payload.id === FOOD_INVALID_ID) {
-                payload.id = context.state.nextFoodId.toString();
+                payload.id = context.state.nextFoodId;
                 context.state.nextFoodId++;
                 context.dispatch("updateLocalStorageFoodId");
             }
@@ -95,10 +95,10 @@ export default {
         /**
          * Removes a @see Food object from the foodStock.
          * @param {ActionContext<FoodsState, State>} context - properties of the module
-         * @param {string} payload - the id of the @see Food object to remove
+         * @param {number} payload - the id of the @see Food object to remove
          * @return {boolean} - success result
          */
-        removeFood(context: ActionContext<FoodsState, State>, payload: string): boolean {
+        removeFood(context: ActionContext<FoodsState, State>, payload: number): boolean {
             let success = false;
 
             if (context.state.foodStock.has(payload)) {
@@ -112,10 +112,10 @@ export default {
         /**
          * Increments the count property of a @see Food.
          * @param {ActionContext<FoodsState, State>} context - properties of the module
-         * @param {{ id: string, add: number }} payload - contains the @see Food id and amount to increment
+         * @param {{ id: number, add: number }} payload - contains the @see Food id and amount to increment
          */
         incrementStock(context: ActionContext<FoodsState, State>,
-                payload: { id: string, add: number }): void {
+                payload: { id: number, add: number }): void {
             const food = context.state.foodStock.get(payload.id);
             if (food !== undefined) {
                 food.count = Number(food.count) + Number(payload.add);
@@ -126,10 +126,10 @@ export default {
         /**
          * Decrements the count property of a @see Food.
          * @param {ActionContext<FoodsState, State>} context - properties of the module
-         * @param {{ id: string, sub: number }} payload - contains the @see Food id and amount to decrement
+         * @param {{ id: number, sub: number }} payload - contains the @see Food id and amount to decrement
          */
         decrementStock(context: ActionContext<FoodsState, State>,
-                payload: { id: string, sub: number }): void {
+                payload: { id: number, sub: number }): void {
             const food = context.state.foodStock.get(payload.id);
             if (food !== undefined) {
                 food.count = Number(food.count) - Number(payload.sub);
