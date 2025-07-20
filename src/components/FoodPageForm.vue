@@ -31,7 +31,7 @@
                     v-model="formSize"
                     type="text"
                     :placeholder="
-                        editing && originalFood?.size ? originalFood.size : 'Small Can'
+                        editing && originalFood?.size ? originalFood.size : 'Small'
                     "
                     :state="submitted ? sizeState : null"
                 ></b-form-input>

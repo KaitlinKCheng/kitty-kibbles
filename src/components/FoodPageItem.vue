@@ -160,7 +160,7 @@ export default Vue.extend({
             if (this.formRemoveStock < 0) {
                 return "Please enter a positive number.";
             } else if (this.updatedRemainingStock < 0) {
-                return "Stock remaining cannot be negative.";
+                return "Remaining stock cannot be negative.";
             } else {
                 return "";
             }
