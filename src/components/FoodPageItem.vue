@@ -58,7 +58,7 @@
                                 <fa-icon icon="fa-solid fa-times" />
                             </b-button>
                         </template>
-                        <b-form>
+                        <b-form @keydown.enter="submitStockUpdate()">
                             <b-form-group
                                 label="Add"
                                 :invalid-feedback="addStockInvalidFeedback"
@@ -186,6 +186,10 @@ export default Vue.extend({
             this.$emit("delete-food", this.food.id);
         },
         submitStockUpdate() {
+            if (!this.addStockState || !this.removeStockState) {
+                return;
+            }
+
             this.incrementStock(this.formAddStock);
             this.decrementStock(this.formRemoveStock);
 
