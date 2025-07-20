@@ -1,7 +1,7 @@
 import { FOOD_INVALID_ID } from "@/ts/constants";
 
 export default class Food {
-    id: string; // Automatically generated as brand.name
+    id: number;
     brand: string;
     name: string;
     size: string;
