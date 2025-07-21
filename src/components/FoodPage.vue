@@ -21,7 +21,7 @@
         >
             <b-col
                 v-for="food in getFoodStock.values()"
-                :key="food.id + food.brand + food.name + food.size + food.count"
+                :key="food.id + food.brand + food.name + food.type + food.size + food.count"
                 class="my-3"
             >
                 <FoodPageItem
@@ -80,8 +80,17 @@ export default Vue.extend({
             this.showFoodForm();
         },
         deleteFood(foodItem: Food): void {
-            store.dispatch("foods/removeFood", foodItem.id);
-            this.$forceUpdate();
+            this.$bvModal.msgBoxConfirm(
+                `Are you sure you want to delete ${foodItem.brand} – ${foodItem.name}?`, {
+                    title: 'Delete Food',
+                    okVariant: 'danger',
+                    cancelVariant: 'dark'
+            }).then(confirm => {
+                if (confirm) {
+                    store.dispatch("foods/removeFood", foodItem.id);
+                    this.$forceUpdate();
+                }
+            });
         }
     }
 });

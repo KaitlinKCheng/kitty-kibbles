@@ -1,12 +1,16 @@
 <template>
     <b-container>
         <b-card
-            :header="food.brand + ' – ' + food.name + ' (' + food.size + ')'"
             header-text-variant="light"
             header-bg-variant="primary"
             header-border-variant="primary"
             border-variant="primary"
         >
+            <template #header>
+                <span class="font-weight-bold">{{food.brand}} – {{food.name}}</span>
+                <br />
+                <span>{{food.type}}, {{food.size}}</span>
+            </template>
             <b-card-body>
                 <b-row
                     class="text-center"
@@ -58,7 +62,7 @@
                                 <fa-icon icon="fa-solid fa-times" />
                             </b-button>
                         </template>
-                        <b-form>
+                        <b-form @keydown.enter="submitStockUpdate()">
                             <b-form-group
                                 label="Add"
                                 :invalid-feedback="addStockInvalidFeedback"
@@ -68,6 +72,7 @@
                                     type="number"
                                     min="0"
                                     :state="addStockState"
+                                    autofocus
                                 ></b-form-input>
                             </b-form-group>
                             <b-form-group
@@ -186,6 +191,10 @@ export default Vue.extend({
             this.$emit("delete-food", this.food.id);
         },
         submitStockUpdate() {
+            if (!this.addStockState || !this.removeStockState) {
+                return;
+            }
+
             this.incrementStock(this.formAddStock);
             this.decrementStock(this.formRemoveStock);
 
