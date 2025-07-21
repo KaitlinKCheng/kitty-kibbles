@@ -21,7 +21,7 @@
         >
             <b-col
                 v-for="food in getFoodStock.values()"
-                :key="food.id + food.brand + food.name + food.size + food.count"
+                :key="food.id + food.brand + food.name + food.type + food.size + food.count"
                 class="my-3"
             >
                 <FoodPageItem

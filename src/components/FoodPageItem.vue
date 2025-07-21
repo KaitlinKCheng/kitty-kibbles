@@ -1,12 +1,16 @@
 <template>
     <b-container>
         <b-card
-            :header="food.brand + ' – ' + food.name + ' (' + food.size + ')'"
             header-text-variant="light"
             header-bg-variant="primary"
             header-border-variant="primary"
             border-variant="primary"
         >
+            <template #header>
+                <span class="font-weight-bold">{{food.brand}} – {{food.name}}</span>
+                <br />
+                <span>{{food.type}}, {{food.size}}</span>
+            </template>
             <b-card-body>
                 <b-row
                     class="text-center"

@@ -27,6 +27,15 @@
                 ></b-form-input>
                 <b-form-invalid-feedback>Please enter a name.</b-form-invalid-feedback>
             </b-form-group>
+            <b-form-group label="Type">
+                <b-form-radio-group v-model="formType">
+                    <b-form-radio
+                        v-for="value in foodTypes"
+                        :key="value"
+                        :value="value"
+                    >{{ value }}</b-form-radio>
+                </b-form-radio-group>
+            </b-form-group>
             <b-form-group label="Size">
                 <b-form-input
                     v-model="formSize"
@@ -62,7 +71,7 @@
 import Vue from "vue";
 import store from "@/store";
 import Food from "@/ts/classes/Food";
-import { FOOD_INVALID_ID } from "@/ts/constants";
+import { FOOD_TYPES, FOOD_INVALID_ID } from "@/ts/constants";
 
 export default Vue.extend({
     name: "FoodPageForm",
@@ -74,8 +83,10 @@ export default Vue.extend({
 
     data() {
         return {
+            foodTypes: FOOD_TYPES,
             formBrand: "",
             formName: "",
+            formType: Object.values(FOOD_TYPES)[0],
             formSize: "",
             formCount: 0,
             submitted: false
@@ -130,6 +141,7 @@ export default Vue.extend({
                 const updatedFood = this.originalFood;
                 updatedFood.brand = this.formBrand;
                 updatedFood.name = this.formName;
+                updatedFood.type = this.formType;
                 updatedFood.size = this.formSize;
                 updatedFood.count = this.formCount;
 
@@ -139,6 +151,7 @@ export default Vue.extend({
                     FOOD_INVALID_ID,
                     this.formBrand,
                     this.formName,
+                    this.formType,
                     this.formSize,
                     this.formCount
                 ));
@@ -152,12 +165,14 @@ export default Vue.extend({
         resetFields(): void {
             this.formBrand = "";
             this.formName = "";
+            this.formType = Object.values(FOOD_TYPES)[0];
             this.formSize = "";
             this.formCount = 0;
         },
         matchFieldsToFood(): void {
             this.formBrand = this.originalFood.brand;
             this.formName = this.originalFood.name;
+            this.formType = this.originalFood.type;
             this.formSize = this.originalFood.size;
             this.formCount = this.originalFood.count;
         },
