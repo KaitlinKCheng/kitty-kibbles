@@ -73,28 +73,28 @@ export default Vue.extend({
         let sortByDefault = {
             name: "Default",
             sortFunc: function(arr: Array<{ id: number; value: Food }>): Array<{ id: number; value: Food }> {
-                    return _.sortBy(arr, [(entry) => entry.id]);
+                    return _.sortBy(arr, [(entry: { id: number; value: Food }) => entry.id]);
             }
         };
 
         let sortByBrand = {
             name: "Brand",
             sortFunc: function(arr: Array<{ id: number; value: Food }>): Array<{ id: number; value: Food }> {
-                    return _.sortBy(arr, [(entry) => entry.value.brand.toLowerCase()]);
+                    return _.sortBy(arr, [(entry: { id: number; value: Food }) => entry.value.brand.toLowerCase()]);
             }
         };
 
         let sortByName = {
             name: "Name",
             sortFunc: function(arr: Array<{ id: number; value: Food }>): Array<{ id: number; value: Food }> {
-                    return _.sortBy(arr, [(entry) => entry.value.name.toLowerCase()]);
+                    return _.sortBy(arr, [(entry: { id: number; value: Food }) => entry.value.name.toLowerCase()]);
             }
         };
 
         let sortByRemaining = {
             name: "# Remaining",
             sortFunc: function(arr: Array<{ id: number; value: Food }>): Array<{ id: number; value: Food }> {
-                    return _.sortBy(arr, [(entry) => +entry.value.count]);
+                    return _.sortBy(arr, [(entry: { id: number; value: Food }) => +entry.value.count]);
             }
         };
 
