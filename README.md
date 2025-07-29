@@ -10,14 +10,13 @@ Implemented:
 - Add new type of cat food.
 - Increase/decrease available cat food.
 - Edit/delete cat food.
-- localStorage persistence in the browser for saving cat food.
+- localStorage persistence in the browser for saving cat food across sessions.
 - Add/subtract multiple counts of cat food at a time.
+- Sort cat food.
 
 Upcoming:
-- Search/sort cat food items.
 - UI updates.
-- Cat profile page.
-- . . . and more!
+- QoL improvements.
 
 ## Demo
 Visit https://kaitlinkcheng.github.io/kitty-kibbles/ for a live demo of the project.
