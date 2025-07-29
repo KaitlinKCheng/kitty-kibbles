@@ -80,14 +80,14 @@ export default Vue.extend({
         let sortByBrand = {
             name: "Brand",
             sortFunc: function(arr: Array<{ id: number; value: Food }>): Array<{ id: number; value: Food }> {
-                    return _.sortBy(arr, [(entry) => entry.value.brand]);
+                    return _.sortBy(arr, [(entry) => entry.value.brand.toLowerCase()]);
             }
         };
 
         let sortByName = {
             name: "Name",
             sortFunc: function(arr: Array<{ id: number; value: Food }>): Array<{ id: number; value: Food }> {
-                    return _.sortBy(arr, [(entry) => entry.value.name]);
+                    return _.sortBy(arr, [(entry) => entry.value.name.toLowerCase()]);
             }
         };
 
