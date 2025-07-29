@@ -17,7 +17,7 @@
             class="mt-3"
             align="right"
         >
-            <b-dropdown text="Sort By">
+            <b-dropdown text="Sort By" :disabled="getFoodStock.size === 0">
                 <b-dropdown-item
                     v-for="option in sortOptions"
                     :key="option.name"
