@@ -138,6 +138,16 @@ export default {
             context.dispatch("updateLocalStorageFoodStock");
         },
         /**
+         * Updates the current foodStock.
+         * @param {ActionContext<FoodsState, State>} context - properties of the module
+         * @param {Map<number, Food>} payload - the new foodStock
+         */
+        updateFoodStock(context: ActionContext<FoodsState, State>,
+                payload: Map<number, Food>): void {
+            context.commit("setFoodStock", payload);
+            context.dispatch("updateLocalStorageFoodStock");
+        },
+        /**
          * Stores the current foodStock in localStorage.
          * @param {ActionContext<FoodsState, State>} context - properties of the module
          */

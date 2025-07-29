@@ -13,6 +13,18 @@
                 <fa-icon icon="fa-solid fa-plus" />
             </b-button>
         </b-col>
+        <b-col
+            class="mt-3"
+            align="right"
+        >
+            <b-dropdown text="Sort By" :disabled="getFoodStock.size === 0">
+                <b-dropdown-item
+                    v-for="option in sortOptions"
+                    :key="option.name"
+                    @click="sort(option.sortFunc)"
+                >{{ option.name }}</b-dropdown-item>
+            </b-dropdown>
+        </b-col>
         <b-row
             cols="1"
             cols-sm="2"
@@ -21,7 +33,7 @@
         >
             <b-col
                 v-for="food in getFoodStock.values()"
-                :key="food.id + food.brand + food.name + food.size + food.count"
+                :key="food.id + food.brand + food.name + food.type + food.size + food.count"
                 class="my-3"
             >
                 <FoodPageItem
@@ -45,6 +57,7 @@ import store from "@/store";
 import Food from "@/ts/classes/Food";
 import FoodPageForm from "@/components/FoodPageForm.vue";
 import FoodPageItem from "@/components/FoodPageItem.vue";
+import _ from "lodash";
 
 export default Vue.extend({
     name: "FoodPage",
@@ -53,14 +66,52 @@ export default Vue.extend({
         FoodPageItem
     },
 
-    mounted() {
+    created() {
         store.dispatch("foods/init");
+
+        // Set up sort options
+        let sortByDefault = {
+            name: "Default",
+            sortFunc: function(arr: Array<{ id: number; value: Food }>): Array<{ id: number; value: Food }> {
+                    return _.sortBy(arr, [(entry) => entry.id]);
+            }
+        };
+
+        let sortByBrand = {
+            name: "Brand",
+            sortFunc: function(arr: Array<{ id: number; value: Food }>): Array<{ id: number; value: Food }> {
+                    return _.sortBy(arr, [(entry) => entry.value.brand.toLowerCase()]);
+            }
+        };
+
+        let sortByName = {
+            name: "Name",
+            sortFunc: function(arr: Array<{ id: number; value: Food }>): Array<{ id: number; value: Food }> {
+                    return _.sortBy(arr, [(entry) => entry.value.name.toLowerCase()]);
+            }
+        };
+
+        let sortByRemaining = {
+            name: "# Remaining",
+            sortFunc: function(arr: Array<{ id: number; value: Food }>): Array<{ id: number; value: Food }> {
+                    return _.sortBy(arr, [(entry) => +entry.value.count]);
+            }
+        };
+
+        this.sortOptions.push(sortByDefault);
+        this.sortOptions.push(sortByBrand);
+        this.sortOptions.push(sortByName);
+        this.sortOptions.push(sortByRemaining);
     },
 
     data() {
         return {
             currentFood: new Food(),
-            editing: false
+            editing: false,
+            sortOptions: new Array<{
+                name: string;
+                sortFunc: (arr: Array<{ id: number; value: Food }>) => Array<{ id: number; value: Food }>
+            }>()
         };
     },
 
@@ -80,8 +131,26 @@ export default Vue.extend({
             this.showFoodForm();
         },
         deleteFood(foodItem: Food): void {
-            store.dispatch("foods/removeFood", foodItem.id);
-            this.$forceUpdate();
+            this.$bvModal.msgBoxConfirm(
+                `Are you sure you want to delete ${foodItem.brand} – ${foodItem.name}?`, {
+                    title: 'Delete Food',
+                    okVariant: 'danger',
+                    cancelVariant: 'dark'
+            }).then(confirm => {
+                if (confirm) {
+                    store.dispatch("foods/removeFood", foodItem.id);
+                    this.$forceUpdate();
+                }
+            });
+        },
+        sort(sortFunc: (arr: Array<{ id: number; value: Food }>) => Array<{ id: number; value: Food }>): void {
+            // Convert map to array for sorting
+            let foodStockArray = Array.from(this.getFoodStock, ([id, value]) => ({id, value}));
+            foodStockArray = sortFunc(foodStockArray);
+
+            const newFoodStock = new Map(foodStockArray.map((entry) => [entry.id, entry.value]));
+
+            store.dispatch("foods/updateFoodStock", newFoodStock);
         }
     }
 });
