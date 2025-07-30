@@ -2,6 +2,8 @@
     <b-modal
         id="formModal"
         :title="editing ? 'Edit Food' : 'Add New Food'"
+        @shown="refreshFields"
+        @hidden="resetFields"
     >
         <b-form @keydown.enter="submitForm()">
             <b-form-group label="Brand">
@@ -114,18 +116,6 @@ export default Vue.extend({
         }
     },
 
-    watch: {
-        editing() {
-            this.refreshFields();
-        },
-        originalFood: {
-            deep: true,
-            handler(): void {
-                this.refreshFields();
-            }
-        }
-    },
-
     methods: {
         show(): void {
             this.$bvModal.show("formModal");
@@ -157,7 +147,6 @@ export default Vue.extend({
                 ));
             }
 
-            this.resetFields();
             this.submitted = false;
             this.$bvModal.hide("formModal");
             this.$emit("done-form");
