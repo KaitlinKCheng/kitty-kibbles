@@ -10,7 +10,7 @@
             <b-navbar-nav>
                 <b-navbar-brand to="/">
                     <fa-icon icon="fa-solid fa-cat" />
-                    <span>Kitty Kibbles</span>
+                    <span>&nbsp;Kitty Kibbles</span>
                 </b-navbar-brand>
             </b-navbar-nav>
         </b-navbar>
