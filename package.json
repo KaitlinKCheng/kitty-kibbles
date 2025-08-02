@@ -1,6 +1,6 @@
 {
     "name": "kitty-kibbles",
-    "version": "0.7.0",
+    "version": "0.7.3",
     "private": true,
     "scripts": {
         "serve": "vue-cli-service serve",
@@ -12,7 +12,9 @@
         "@fortawesome/free-regular-svg-icons": "^6.4.0",
         "@fortawesome/free-solid-svg-icons": "^6.4.0",
         "@fortawesome/vue-fontawesome": "^2.0.10",
+        "body-parser": "^1.20.3",
         "bootstrap-vue": "^2.23.1",
+        "cookie": "^0.7.0",
         "core-js": "^3.8.3",
         "lodash": "^4.17.21",
         "vue": "^2.6.14",
@@ -20,7 +22,7 @@
         "vuex": "^3.6.2"
     },
     "devDependencies": {
-        "@types/lodash": "^4.17.20",
+        "@types/lodash": "^4.14.50",
         "@typescript-eslint/eslint-plugin": "^5.4.0",
         "@typescript-eslint/parser": "^5.4.0",
         "@vue/cli-plugin-babel": "~5.0.0",
