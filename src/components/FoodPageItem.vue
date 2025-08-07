@@ -1,7 +1,6 @@
 <template>
     <b-container>
         <b-card
-            header-text-variant="light"
             header-bg-variant="primary"
             header-border-variant="primary"
             border-variant="primary"
@@ -88,7 +87,7 @@
                             </b-form-group>
                             <b-button
                                 @click="submitStockUpdate()"
-                                variant="secondary"
+                                variant="primary"
                                 :disabled="!addStockState || !removeStockState"
                             >Submit</b-button>
                         </b-form>
