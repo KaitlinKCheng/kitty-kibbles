@@ -1,15 +1,38 @@
 <template>
     <b-container>
-        <b-card
-            header-text-variant="light"
-            header-bg-variant="primary"
-            header-border-variant="primary"
-            border-variant="primary"
-        >
+        <b-card header-bg-variant="light">
             <template #header>
-                <span class="font-weight-bold">{{food.brand}} – {{food.name}}</span>
-                <br />
-                <span>{{food.type}}, {{food.size}}</span>
+                <b-container>
+                    <b-row align-h="between">
+                        <b-col cols="8">
+                            <b-row>
+                                <span class="font-weight-bold">{{food.name}}</span>
+                            </b-row>
+                            <b-row>
+                                <span class="font-italic">{{food.brand}}</span>
+                            </b-row>
+                            <b-row>
+                                <span class="font-weight-light">{{food.type}}, {{food.size}}</span>
+                            </b-row>
+                        </b-col>
+                        <b-col cols="4" class="btn-group pl-2" align-self="start">
+                            <b-button
+                                @click="editFood()"
+                                class="rounded"
+                                variant="secondary"
+                            >
+                                <fa-icon icon="fa-solid fa-pen-to-square" />
+                            </b-button>
+                            <b-button
+                                @click="deleteFood()"
+                                class="ml-1 rounded"
+                                variant="danger"
+                            >
+                                <fa-icon icon="fa-solid fa-trash" />
+                            </b-button>
+                        </b-col>
+                    </b-row>
+                </b-container>
             </template>
             <b-card-body>
                 <b-row
@@ -31,12 +54,7 @@
                         <fa-icon icon="fa-solid fa-plus" />
                     </b-button>
                 </b-row>
-            </b-card-body>
-            <b-card-footer
-                footer-bg-variant="white"
-                footer-border-variant="primary"
-            >
-                <b-row>
+                <b-row class="mt-4">
                     <b-button
                         :id="updateStockBtnId"
                         class="w-100"
@@ -88,33 +106,13 @@
                             </b-form-group>
                             <b-button
                                 @click="submitStockUpdate()"
-                                variant="secondary"
+                                variant="primary"
                                 :disabled="!addStockState || !removeStockState"
                             >Submit</b-button>
                         </b-form>
                     </b-popover>
                 </b-row>
-                <b-row class="mt-1">
-                    <b-button
-                        class="w-100"
-                        @click="editFood()"
-                        variant="secondary"
-                    >
-                        <span>Edit</span>&nbsp;
-                        <fa-icon icon="fa-solid fa-pen-to-square" />
-                    </b-button>
-                </b-row>
-                <b-row class="mt-1">
-                    <b-button
-                        class="w-100"
-                        @click="deleteFood()"
-                        variant="danger"
-                    >
-                        <span>Delete</span>&nbsp;
-                        <fa-icon icon="fa-solid fa-trash" />
-                    </b-button>
-                </b-row>
-            </b-card-footer>
+            </b-card-body>
         </b-card>
     </b-container>
 </template>

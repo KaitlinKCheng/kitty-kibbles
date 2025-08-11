@@ -1,27 +1,17 @@
 # Kitty Kibbles
-
-🛠️ This project is a work-in-progress! 🛠️
-
-## About
 Kitty Kibbles is a logging app for tracking purchased cat food.
 
 ## Features
-Implemented:
-- Add new type of cat food.
-- Increase/decrease available cat food.
-- Edit/delete cat food.
-- localStorage persistence in the browser for saving cat food across sessions.
-- Add/subtract multiple counts of cat food at a time.
-- Sort cat food.
-
-Upcoming:
-- UI updates.
-- QoL improvements.
+- Add new cat food entry.
+- Increase/decrease available food.
+- Edit and delete entries.
+- Sort food.
+- localStorage persistence in the browser for saving food across sessions.
 
 ## Demo
 Visit https://kaitlinkcheng.github.io/kitty-kibbles/ for a live demo of the project.
 
-Note that data is currently being persisted in the browser's localStorage.
+Note that data is persisted in the browser's localStorage.
 
 ## Project Setup
 ```

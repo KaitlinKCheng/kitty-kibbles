@@ -6,7 +6,7 @@
         >
             <b-button
                 @click="[editing = false, showFoodForm()]"
-                variant="secondary"
+                variant="primary"
                 size="lg"
             >
                 <span>Add New Food</span>&nbsp;
@@ -17,7 +17,11 @@
             class="mt-3"
             align="right"
         >
-            <b-dropdown text="Sort By" :disabled="getFoodStock.size === 0">
+            <b-dropdown
+                text="Sort By"
+                variant="primary"
+                :disabled="getFoodStock.size === 0"
+            >
                 <b-dropdown-item
                     v-for="option in sortOptions"
                     :key="option.name"
