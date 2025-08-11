@@ -4,7 +4,6 @@
         class="my-2"
     >
         <b-navbar
-            type="dark"
             variant="primary"
         >
             <b-navbar-nav>

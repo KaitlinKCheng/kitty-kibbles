@@ -62,7 +62,7 @@
         <template #modal-footer>
             <b-button
                 @click="submitForm()"
-                variant="secondary"
+                variant="primary"
                 :disabled="submitted && !state"
             >Submit</b-button>
         </template>
