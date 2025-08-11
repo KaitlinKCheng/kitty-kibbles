@@ -6,7 +6,7 @@
         >
             <b-button
                 @click="[editing = false, showFoodForm()]"
-                variant="secondary"
+                variant="primary"
                 size="lg"
             >
                 <span>Add New Food</span>&nbsp;
@@ -17,7 +17,11 @@
             class="mt-3"
             align="right"
         >
-            <b-dropdown text="Sort By" :disabled="getFoodStock.size === 0">
+            <b-dropdown
+                text="Sort By"
+                variant="primary"
+                :disabled="getFoodStock.size === 0"
+            >
                 <b-dropdown-item
                     v-for="option in sortOptions"
                     :key="option.name"
@@ -46,7 +50,7 @@
         <FoodPageForm
             :food-item="currentFood"
             :editing="editing"
-            @done-form="[$forceUpdate(), editing = false]"
+            @done-form="doneForm()"
         />
     </b-container>
 </template>
@@ -125,6 +129,17 @@ export default Vue.extend({
         showFoodForm(): void {
             this.$bvModal.show("formModal");
         },
+        doneForm(): void {
+            this.$forceUpdate();
+
+            if (this.editing) {
+                this.toast("Food successfully updated.");
+            } else {
+                this.toast("Food successfully added.");
+            }
+
+            this.editing = false;
+        },
         editFood(newFood: Food): void {
             this.currentFood = newFood;
             this.editing = true;
@@ -140,6 +155,8 @@ export default Vue.extend({
                 if (confirm) {
                     store.dispatch("foods/removeFood", foodItem.id);
                     this.$forceUpdate();
+
+                    this.toast("Food successfully deleted.");
                 }
             });
         },
@@ -151,6 +168,13 @@ export default Vue.extend({
             const newFoodStock = new Map(foodStockArray.map((entry) => [entry.id, entry.value]));
 
             store.dispatch("foods/updateFoodStock", newFoodStock);
+        },
+        toast(msg: string): void {
+            this.$bvToast.toast(msg, {
+                title: "Kitty Kibbles",
+                toaster: "b-toaster-bottom-center",
+                isStatus: true
+            });
         }
     }
 });
